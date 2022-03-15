@@ -1,5 +1,15 @@
-function App() {
-  return <div className="App">1</div>;
-}
+import Cards from "./components/Pages/Cards";
+
+const App = () => {
+  return (
+    <>
+      <Cards />
+    </>
+  );
+};
+// App.defaultProps = {
+//   // cardList: [],
+//   text: "rt",
+// };
 
 export default App;
