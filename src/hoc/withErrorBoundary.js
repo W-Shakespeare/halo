@@ -1,7 +1,7 @@
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import React from "react";
 
-export const withErrorBoundary = (Component) => {
+export const WithErrorBoundary = (Component) => {
   const ErrorBoundaryContainer = ({ props }) => {
     return (
       <ErrorBoundary>

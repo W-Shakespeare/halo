@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { media } from "../../../constant/media";
 
 export const StyledCards = styled.div`
   padding-top: 105px;
@@ -18,6 +19,10 @@ export const WrapperCardList = styled.div`
   width: 100%;
   max-width: 1156px;
   padding: 0px 10px;
+
+  @media (max-width: ${media.laptop}) {
+    justify-content: center;
+  }
 `;
 
 export const WrapperButton = styled.div`
@@ -45,7 +50,10 @@ export const Button = styled.button`
       :hover {
         color: #ffffff;
         background: #4bcfa0;
-        border: unset;
+        border: 1px solid #4bcfa0;
+      }
+      @media (max-width: ${media.mobileL}) {
+        padding: 16px 45px;
       }
     `}
 
@@ -69,9 +77,57 @@ export const Button = styled.button`
       }
     `}
 
+    ${({ orderBtn }) =>
+    orderBtn &&
+    css`
+      i {
+        display: none;
+      }
+      max-width: 288px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Roboto";
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      background: #4bcfa0;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #ffffff;
+      border: 1px solid #4bcfa0;
+      padding: 16px 117px;
+
+      :hover {
+        color: #ffffff;
+        background: #4bcfa0;
+        border: 1px solid #4bcfa0;
+        i {
+          font-size: 20px;
+          display: block;
+          margin-left: 10px;
+          margin-bottom: 2px;
+        }
+      }
+      @media (max-width: 370px) {
+        max-width: 80%;
+      }
+    `}
+
+    
+
     &:active {
     color: #ffffff;
     background: hsl(159deg 58% 48%);
-    border: unset;
+    border: 1px solid #4bcfa0;
   }
+`;
+
+export const WrapperLoader = styled.div`
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

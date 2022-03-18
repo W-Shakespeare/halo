@@ -1,15 +1,14 @@
+import { compose } from "redux";
 import Cards from "./components/Pages/Cards";
-
+import { WithErrorBoundary } from "./hoc/withErrorBoundary";
 const App = () => {
+  // let testErrorBounder = new Error('testErrorBounder');
+  // testErrorBounder();
   return (
     <>
       <Cards />
     </>
   );
 };
-// App.defaultProps = {
-//   // cardList: [],
-//   text: "rt",
-// };
 
-export default App;
+export default compose(WithErrorBoundary)(App);

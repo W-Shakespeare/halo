@@ -1,15 +1,11 @@
 import { useState } from "react";
 
-export const useInput = (initial, validators = []) => {
+export const useInput = (initial, initialError = false, validators = []) => {
   const [value, setValue] = useState(initial);
-  const [error, setError] = useState(false);
-  console.log("error", error);
-  console.log("validators", validators);
+  const [error, setError] = useState(initialError);
 
   const onChange = (e) => {
     const { value } = e.target;
-    // value == "" && setError(false);
-    // value && checkText(value) && setError(false);
 
     for (let i = 0; i < validators.length; i++) {
       let validator = validators[i];
@@ -23,8 +19,6 @@ export const useInput = (initial, validators = []) => {
 
     setValue(value);
   };
-
-  // const
 
   const onBlur = (e) =>
     true && !error && !e.target.value ? setError("required") : false;

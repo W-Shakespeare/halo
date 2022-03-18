@@ -2,6 +2,7 @@ import * as types from "./cardList.types";
 
 const initialState = {
   cardList: null,
+  isLoading: false,
 };
 
 const cardListReducer = (state = initialState, action) => {
@@ -10,6 +11,12 @@ const cardListReducer = (state = initialState, action) => {
       return {
         ...state,
         cardList: action.cardListArr,
+      };
+    }
+    case types.LOADING: {
+      return {
+        ...state,
+        isLoading: action.isLoading,
       };
     }
     default: {

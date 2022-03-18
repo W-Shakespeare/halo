@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { compose } from "redux";
 import { getCardList } from "../../../redux/cardList/cardList.thunks";
-import { Cards } from "./Cards";
+import Cards from "./Cards";
 
-export default (props) => {
+const ContainerCard = (props) => {
   const { cardList } = useSelector((state) => state.cardList);
 
   const [isShowModalWithForm, setIsShowModalWithForm] = useState(false);
@@ -24,7 +25,8 @@ export default (props) => {
   };
 
   const onGetCheapestCard = () => {
-    const cheapestCard = [].sort((a, b) => a - b);
+    const willSortCardList = [...cardList];
+    const cheapestCard = willSortCardList.sort((a, b) => a.price - b.price);
     return cheapestCard[0];
   };
 
@@ -57,3 +59,4 @@ export default (props) => {
 
   return <Cards {...cardsProps} />;
 };
+export default compose()(ContainerCard);
