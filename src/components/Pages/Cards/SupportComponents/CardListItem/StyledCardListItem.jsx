@@ -130,10 +130,15 @@ export const Price = styled(CutLongText)`
   line-height: 72px;
   letter-spacing: -0.02em;
   color: #000000;
-  max-width: 250px;
+  max-width: 220px;
 
   @media (max-width: ${media.mobileL}) {
+    max-width: 250px;
+
     font-size: 50px;
+  }
+  @media (max-width: ${media.mobileS}) {
+    max-width: 200px;
   }
   @media (max-height: 570px) {
     font-size: 50px;
