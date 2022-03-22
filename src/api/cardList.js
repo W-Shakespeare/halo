@@ -1,6 +1,6 @@
-import axiosConfig from "./api.config";
+import apiConfig from "./api.config";
 
-export const getCardsList = () => axiosConfig.get();
+export const getCardsList = () => apiConfig.get();
 
 export const updateCardsList = (cardsListItemId, cardsListItemData) =>
-  axiosConfig.put(`/${cardsListItemId}`, cardsListItemData);
+  apiConfig.put({ url: `/${cardsListItemId}`, data: cardsListItemData });
