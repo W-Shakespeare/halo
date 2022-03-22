@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { compose } from "redux";
 import { getCardList } from "../../../redux/cardList/cardList.thunks";
@@ -25,17 +25,19 @@ const ContainerCard = (props) => {
   };
 
   const onGetCheapestCard = () => {
-    const willSortCardList = [...cardList];
+    const willSortCardList = cardList ? [...cardList] : [];
     const cheapestCard = willSortCardList.sort((a, b) => a.price - b.price);
     return cheapestCard[0];
   };
+
+  const memoizedCheapestCard = useMemo(() => onGetCheapestCard(), [cardList]);
 
   const onBuy = (selectedCard) => {
     onShowModalWithForm(selectedCard);
   };
 
   const onBuyCheapest = () => {
-    const cheapestCard = onGetCheapestCard();
+    const cheapestCard = memoizedCheapestCard;
     onShowModalWithForm(cheapestCard);
   };
 
