@@ -19,25 +19,34 @@ const WithInputValidation = (Component) => {
     const [error, setError] = useState(initialError);
     const [isUsuallyBorderInp, setIsUsuallyBorderInp] = useState(true);
 
+    const validatorsCheckOfEvent = (eventName, value) => {
+      for (let i = 0; i < validators.length; i++) {
+        let validator = validators[i];
+        if (validator.onEvent == eventName) {
+          if (!validator.func(value) && !value == "") {
+            setError(validator.errorMessage);
+            break;
+          }
+
+          validator.onEvent == "onChange" && setError(false);
+        }
+      }
+    };
+
     const onChange = (e) => {
       setIsUsuallyBorderInp(false);
       const { value } = e.target;
-
-      for (let i = 0; i < validators.length; i++) {
-        let validator = validators[i];
-
-        if (!validator.func(value) && !value == "") {
-          setError(validator.errorMessage);
-          break;
-        }
-        setError(false);
-      }
-
+      validatorsCheckOfEvent("onChange", value);
       setValue(value);
     };
 
-    const onBlur = (e) =>
-      true && !error && !e.target.value ? setError(isRequred) : false;
+    const onBlur = (e) => {
+      if ((!error || error == isRequred) && !e.target.value) {
+        setError(isRequred);
+        return;
+      }
+      validatorsCheckOfEvent("onBlur", value);
+    };
 
     useEffect(() => {
       if (!buttonClick) return;
