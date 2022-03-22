@@ -6,8 +6,9 @@ export const CardList = ({ cardList, onBuy }) => {
   return (
     <>
       {cardList.map((currentCard, i) => {
+        const id = currentCard.name + currentCard.price;
         return (
-          <Wrapper key={i}>
+          <Wrapper key={id}>
             <CardListItem
               {...currentCard}
               currentCard={currentCard}
