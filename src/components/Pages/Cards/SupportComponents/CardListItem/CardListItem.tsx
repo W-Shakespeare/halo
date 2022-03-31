@@ -1,8 +1,20 @@
 import { Button } from "../../StyledCards.jsx";
 import * as S from "./StyledCardListItem";
-import PropTypes from "prop-types";
+import { ListItemObj } from "../../../../../redux/cardList/types.js";
+import { FC } from "react";
 
-export const CardListItem = ({
+type CardListItemPropsType = {
+  category: string | undefined;
+  name: string | undefined;
+  price: number | undefined;
+  shoppingCart: boolean | undefined;
+  id?: number | undefined;
+  currentCard: ListItemObj | null;
+  onBuy?: (selectedCard: ListItemObj) => void;
+  modal?: boolean | undefined;
+};
+
+export const CardListItem: FC<CardListItemPropsType> = ({
   category,
   name,
   price,
@@ -12,6 +24,7 @@ export const CardListItem = ({
   modal,
 }) => {
   const onWillSelectedCard = () => {
+    if (!currentCard || !onBuy) return;
     onBuy(currentCard);
   };
   return (
@@ -42,25 +55,15 @@ export const CardListItem = ({
   );
 };
 
-CardListItem.propTypes = {
-  category: PropTypes.string,
-  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  shoppingCart: PropTypes.bool,
-  currentCard: PropTypes.object,
-  onBuy: PropTypes.func,
-  modal: PropTypes.bool,
-  onBuy: PropTypes.func,
-};
-
 CardListItem.defaultProps = {
   category: "category",
   name: "name",
-  price: "price",
+  price: 0,
   shoppingCart: false,
   currentCard: {
     category: "category",
     name: "name",
-    price: "price",
+    price: 0,
     shoppingCart: false,
   },
   modal: false,

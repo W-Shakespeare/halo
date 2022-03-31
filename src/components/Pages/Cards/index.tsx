@@ -1,21 +1,28 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { compose } from "redux";
 import { getCardList } from "../../../redux/cardList/cardList.thunks";
 import Cards from "./Cards";
+import { AppStateType } from "../../../redux/store";
+import { ListItemObj } from "../../../redux/cardList/types";
 
-const ContainerCard = (props) => {
-  const { cardList } = useSelector((state) => state.cardList);
+type ContainerPropsType = {
+  cardList: Array<ListItemObj>;
+  onBuy: (selectedCard: ListItemObj) => void;
+};
+
+const ContainerCard: FC<ContainerPropsType> = (props) => {
+  const { cardList } = useSelector((state: AppStateType) => state.cardList);
 
   const [isShowModalWithForm, setIsShowModalWithForm] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState<ListItemObj | null>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCardList());
   }, []);
 
-  const onShowModalWithForm = (selectedCard) => {
+  const onShowModalWithForm = (selectedCard: ListItemObj) => {
     setIsShowModalWithForm(true);
     setSelectedCard(selectedCard);
   };
@@ -32,7 +39,7 @@ const ContainerCard = (props) => {
 
   const memoizedCheapestCard = useMemo(() => onGetCheapestCard(), [cardList]);
 
-  const onBuy = (selectedCard) => {
+  const onBuy = (selectedCard: ListItemObj) => {
     onShowModalWithForm(selectedCard);
   };
 
@@ -61,4 +68,4 @@ const ContainerCard = (props) => {
 
   return <Cards {...cardsProps} />;
 };
-export default compose()(ContainerCard);
+export default compose<React.ComponentType>()(ContainerCard);

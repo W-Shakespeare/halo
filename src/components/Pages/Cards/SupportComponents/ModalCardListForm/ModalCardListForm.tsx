@@ -1,3 +1,5 @@
+import { FC } from "react";
+import { ListItemObj } from "../../../../../redux/cardList/types";
 import { CardListForm } from "../CardListForm/CardListForm";
 import { CardListItem } from "../CardListItem/CardListItem";
 import {
@@ -5,9 +7,16 @@ import {
   Wrapper,
   Close,
 } from "./StyledModalCardListForm";
-import PropTypes from "prop-types";
 
-export const ModalCardListForm = ({ selectedCard, onCloseModalWithForm }) => {
+type ModalCardListForm = {
+  selectedCard: ListItemObj;
+  onCloseModalWithForm: () => void;
+};
+
+export const ModalCardListForm: FC<ModalCardListForm> = ({
+  selectedCard,
+  onCloseModalWithForm,
+}) => {
   return (
     <StyledModalCardListForm>
       <Wrapper close onClick={onCloseModalWithForm}>
@@ -25,13 +34,13 @@ export const ModalCardListForm = ({ selectedCard, onCloseModalWithForm }) => {
   );
 };
 
-ModalCardListForm.propTypes = {
-  onCloseModalWithForm: PropTypes.func,
-  selectedCard: PropTypes.object,
-};
-
 ModalCardListForm.defaultProps = {
   onCloseModalWithForm: () =>
     console.log("Forgot to add a function onCloseModalWithForm"),
-  selectedCard: { category: "category", name: "name", price: "price" },
+  selectedCard: {
+    category: "category",
+    name: "name",
+    price: 0,
+    shoppingCart: false,
+  },
 };

@@ -1,7 +1,9 @@
 import * as api from "../../api/cardList";
+// import * as action from "./cardList.actions";
 import * as action from "./cardList.actions";
+import { ListItemObj, ThunkActionType } from "./types";
 
-export const getCardList = () => async (dispatch) => {
+export const getCardList = (): ThunkActionType => async (dispatch) => {
   dispatch(action.setLoading(true));
   const res = await api.getCardsList();
   dispatch(action.setCardList(res));
@@ -9,7 +11,11 @@ export const getCardList = () => async (dispatch) => {
 };
 
 export const updateCardsList =
-  (cardsListItemId, cardsListItemData) => async (dispatch) => {
+  (
+    cardsListItemId: number | undefined,
+    cardsListItemData: any
+  ): ThunkActionType =>
+  async (dispatch) => {
     const res = await api.updateCardsList(cardsListItemId, cardsListItemData);
     dispatch(getCardList());
   };

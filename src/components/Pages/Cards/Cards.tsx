@@ -9,10 +9,18 @@ import { Modal } from "../../Modal/Modal";
 import { ModalCardListForm } from "./SupportComponents/ModalCardListForm/ModalCardListForm";
 import { compose } from "redux";
 import { WithLoaderCardPage } from "../../../hoc/withLoaderCardPage";
-import PropTypes from "prop-types";
-import { CardListItem } from "./SupportComponents/CardListItem/CardListItem";
+import { ListItemObj } from "../../../redux/cardList/types";
+import React, { FC } from "react";
 
-const Cards = ({
+type CardsPropsType = {
+  cardList: Array<ListItemObj> | null;
+  isShowModalWithForm: boolean;
+  selectedCard: ListItemObj;
+  onBuyCheapest: () => void;
+  onCloseModalWithForm: () => void;
+};
+
+const Cards: FC<CardsPropsType> = ({
   cardList,
   isShowModalWithForm,
   onCloseModalWithForm,
@@ -48,23 +56,17 @@ const Cards = ({
   );
 };
 
-Cards.propTypes = {
-  cardList: PropTypes.oneOfType([
-    PropTypes.array.isRequired,
-    PropTypes.oneOf([null]),
-  ]),
-  isShowModalWithForm: PropTypes.bool,
-  onCloseModalWithForm: PropTypes.func,
-  selectedCard: PropTypes.object,
-  onBuyCheapest: PropTypes.func,
-};
-
 Cards.defaultProps = {
   cardList: null,
   isShowModalWithForm: false,
   onCloseModalWithForm: () =>
     console.log("Forgot to add a function onCloseModalWithForm"),
-  selectedCard: { category: "category", name: "name", price: "price" },
+  selectedCard: {
+    category: "category",
+    name: "name",
+    price: 0,
+    shoppingCart: false,
+  },
   onBuyCheapest: () => console.log("Forgot to add a function onBuyCheapest"),
 };
 

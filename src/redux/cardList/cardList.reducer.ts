@@ -1,7 +1,8 @@
 import * as types from "./cardList.types";
+import { ActionsType, ListItemObj } from "./types";
 
 type InitialStateType = {
-  cardList: null | Array<Object>;
+  cardList: null | Array<ListItemObj>;
   isLoading: boolean;
 };
 
@@ -10,7 +11,10 @@ const initialState: InitialStateType = {
   isLoading: false,
 };
 
-const cardListReducer = (state = initialState, action): InitialStateType => {
+const cardListReducer = (
+  state = initialState,
+  action: ActionsType
+): InitialStateType => {
   switch (action.type) {
     case types.GET_CARDLIST: {
       return {

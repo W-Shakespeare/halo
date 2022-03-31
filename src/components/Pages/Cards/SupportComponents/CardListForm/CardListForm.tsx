@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import {
   validatorsName,
@@ -12,9 +12,17 @@ import {
   Wrapper,
 } from "./StyledCardListForm";
 import { updateCardsList } from "../../../../../redux/cardList/cardList.thunks";
-import PropTypes from "prop-types";
+import { ListItemObj } from "../../../../../redux/cardList/types";
 
-export const CardListForm = ({ selectedCard, onCloseModalWithForm }) => {
+type CardListForm = {
+  selectedCard: ListItemObj | null;
+  onCloseModalWithForm: () => void;
+};
+
+export const CardListForm: FC<CardListForm> = ({
+  selectedCard,
+  onCloseModalWithForm,
+}) => {
   const dispatch = useDispatch();
   const [isOrderClick, setIsOrderClick] = useState(false);
   const [isValidateForm, setIsValidateForm] = useState({
@@ -22,7 +30,7 @@ export const CardListForm = ({ selectedCard, onCloseModalWithForm }) => {
     number: false,
   });
 
-  const onOrder = (e) => {
+  const onOrder = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setIsOrderClick((pre) => !pre);
   };
@@ -32,10 +40,15 @@ export const CardListForm = ({ selectedCard, onCloseModalWithForm }) => {
 
     onCloseModalWithForm();
     const newCardlistItem = { ...selectedCard, shoppingCart: true };
+    if (!selectedCard) return;
     dispatch(updateCardsList(selectedCard.id, newCardlistItem));
   }, [isOrderClick]);
 
-  const onCheckInput = (val, error, nameInp) => {
+  const onCheckInput = (
+    val: string,
+    error: boolean | string,
+    nameInp: string
+  ) => {
     !val || error
       ? setIsValidateForm((pre) => ({ ...pre, [nameInp]: false }))
       : setIsValidateForm((pre) => ({ ...pre, [nameInp]: true }));
@@ -71,12 +84,13 @@ export const CardListForm = ({ selectedCard, onCloseModalWithForm }) => {
   );
 };
 
-CardListForm.propTypes = {
-  selectedCard: PropTypes.object.isRequired,
-  onCloseModalWithForm: PropTypes.func.isRequired,
-};
 CardListForm.defaultProps = {
   onCloseModalWithForm: () =>
     console.log("Forgot to add a function onCloseModalWithForm"),
-  selectedCard: { category: "category", name: "name", price: "price" },
+  selectedCard: {
+    category: "category",
+    name: "name",
+    price: 0,
+    shoppingCart: false,
+  },
 };

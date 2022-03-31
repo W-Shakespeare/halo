@@ -1,10 +1,13 @@
 import * as types from "./cardList.types";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "../store";
 
 export type ListItemObj = {
   category: string;
   name: string;
-  price: string;
+  price: number;
   shoppingCart: boolean;
+  id?: number;
 };
 
 export type SetCardListActionTypes = {
@@ -16,3 +19,12 @@ export type SetLoadingActionTypes = {
   type: typeof types.LOADING;
   isLoading: boolean;
 };
+
+export type ActionsType = SetCardListActionTypes | SetLoadingActionTypes;
+
+export type ThunkActionType = ThunkAction<
+  void,
+  AppStateType,
+  unknown,
+  ActionsType
+>;
